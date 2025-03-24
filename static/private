@@ -1,0 +1,2786 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Mahasiswa Universitas IIU</title>
+  <style>
+    /* CSS Reset dan Variabel */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+      --font-sans: ui-sans-serif, system-ui, sans-serif;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      --radius: 0.5rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--gray-100);
+      color: var(--gray-800);
+      line-height: 1.5;
+    }
+
+    /* Layout & Containers */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .flex-col {
+      flex-direction: column;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .justify-between {
+      justify-content: space-between;
+    }
+
+    .gap-2 {
+      gap: 0.5rem;
+    }
+
+    .gap-4 {
+      gap: 1rem;
+    }
+
+    .gap-6 {
+      gap: 1.5rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .grid {
+      display: grid;
+    }
+
+    .grid-cols-1 {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 768px) {
+      .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Komponen Header dan Navigasi */
+    header {
+      background-color: var(--light);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: var(--gray-600);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      margin-top: 0.5rem;
+      background-color: var(--light);
+      min-width: 200px;
+      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: var(--gray-700);
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.2s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--gray-100);
+      color: var(--primary);
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      transition: background-color 0.2s;
+    }
+
+    .user-menu:hover {
+      background-color: var(--gray-100);
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray-600);
+    }
+
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 4rem;
+        left: 0;
+        right: 0;
+        background-color: var(--light);
+        border-bottom: 1px solid var(--gray-200);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: var(--shadow-md);
+        z-index: 10;
+        display: none;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+    }
+
+    /* Main dan Content */
+    main {
+      min-height: calc(100vh - 140px);
+      padding: 2rem 0;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--gray-900);
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--gray-800);
+    }
+
+    /* Cards dan Containers */
+    .card {
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      height: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      background-color: var(--gray-50);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--gray-200);
+      background-color: var(--gray-50);
+    }
+
+    /* Form dan Input */
+    .form {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    .form-input {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius);
+      background-color: white;
+      color: var(--gray-800);
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    .form-select {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius);
+      background-color: white;
+      color: var(--gray-800);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 16px 16px;
+    }
+
+    .form-error {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--danger);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--gray-200);
+      color: var(--gray-700);
+      border: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--gray-300);
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+
+    .btn-success {
+      background-color: var(--success);
+      color: white;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #059669;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-lg {
+      padding: 1rem 2rem;
+      font-size: 1.125rem;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-primary {
+      background-color: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+    }
+
+    .badge-success {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    .badge-warning {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+    }
+
+    .badge-danger {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-200);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      padding: 1rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      background-color: var(--gray-50);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--gray-200);
+      color: var(--gray-600);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: var(--gray-50);
+    }
+
+    /* Alerts */
+    .alert {
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      border: 1px solid transparent;
+    }
+
+    .alert-primary {
+      background-color: rgba(37, 99, 235, 0.1);
+      border-color: rgba(37, 99, 235, 0.2);
+      color: var(--primary-dark);
+    }
+
+    .alert-success {
+      background-color: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.2);
+      color: #059669;
+    }
+
+    .alert-warning {
+      background-color: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.2);
+      color: #d97706;
+    }
+
+    .alert-danger {
+      background-color: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.2);
+      color: #dc2626;
+    }
+
+    /* Margin dan Padding */
+    .mb-2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+
+    .mb-6 {
+      margin-bottom: 1.5rem;
+    }
+
+    .mb-8 {
+      margin-bottom: 2rem;
+    }
+
+    .mt-2 {
+      margin-top: 0.5rem;
+    }
+
+    .mt-4 {
+      margin-top: 1rem;
+    }
+
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+
+    .ml-2 {
+      margin-left: 0.5rem;
+    }
+
+    .mr-2 {
+      margin-right: 0.5rem;
+    }
+
+    /* Utils */
+    .text-center {
+      text-align: center;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-sm {
+      font-size: 0.875rem;
+    }
+
+    .text-lg {
+      font-size: 1.125rem;
+    }
+
+    .text-xl {
+      font-size: 1.25rem;
+    }
+
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+
+    .text-primary {
+      color: var(--primary);
+    }
+
+    .text-success {
+      color: var(--success);
+    }
+
+    .text-danger {
+      color: var(--danger);
+    }
+
+    .text-warning {
+      color: var(--warning);
+    }
+
+    .text-muted {
+      color: var(--gray-500);
+    }
+
+    .font-bold {
+      font-weight: 700;
+    }
+
+    .font-semibold {
+      font-weight: 600;
+    }
+
+    .w-full {
+      width: 100%;
+    }
+
+    .rounded {
+      border-radius: var(--radius);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--gray-800);
+      color: var(--gray-300);
+      padding: 2rem 0;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .footer-link {
+      display: block;
+      color: var(--gray-400);
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-link:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--gray-700);
+      text-align: center;
+      color: var(--gray-500);
+      font-size: 0.875rem;
+    }
+
+    /* Tab System */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 1.5rem;
+    }
+
+    .tab {
+      padding: 0.75rem 1.5rem;
+      border-bottom: 2px solid transparent;
+      color: var(--gray-600);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--primary);
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Auth Forms */
+    .auth-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 140px);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 480px;
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .auth-header {
+      background-color: var(--gray-50);
+      padding: 2rem 2rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .auth-logo {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-description {
+      color: var(--gray-500);
+    }
+
+    .auth-body {
+      padding: 2rem;
+    }
+
+    .auth-footer {
+      text-align: center;
+      padding: 1.5rem;
+      background-color: var(--gray-50);
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .auth-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Course Card */
+    .course-card {
+      height: 100%;
+    }
+
+    .course-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .course-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      color: var(--gray-500);
+      font-size: 0.875rem;
+    }
+
+    .course-instructor {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .instructor-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    /* Course Details */
+    .course-header {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .course-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray-600);
+    }
+
+    .course-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* Student Dashboard */
+    .stat-card {
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      background-color: white;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary);
+    }
+
+    .stat-title {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+
+    .stat-footer {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--gray-600);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 3fr 1fr;
+      }
+    }
+
+    .activity-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      background-color: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-title {
+      font-weight: 500;
+      color: var(--gray-800);
+    }
+
+    .activity-time {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 3px solid rgba(37, 99, 235, 0.2);
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .toast {
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 1rem 1.5rem;
+      width: 320px;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .toast.hide {
+      animation: slideOut 0.3s forwards;
+    }
+
+    .toast-success {
+      border-left: 4px solid var(--success);
+    }
+
+    .toast-error {
+      border-left: 4px solid var(--danger);
+    }
+
+    .toast-warning {
+      border-left: 4px solid var(--warning);
+    }
+
+    .toast-info {
+      border-left: 4px solid var(--primary);
+    }
+
+    .toast-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toast-content {
+      flex: 1;
+    }
+
+    .toast-title {
+      font-weight: 500;
+      color: var(--gray-800);
+      margin-bottom: 0.25rem;
+    }
+
+    .toast-message {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+    }
+
+    .toast-close {
+      background: none;
+      border: none;
+      color: var(--gray-400);
+      cursor: pointer;
+      font-size: 1.25rem;
+      padding: 0.25rem;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .modal-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      width: 500px;
+      max-width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(-20px);
+      transition: transform 0.3s;
+    }
+
+    .modal-backdrop.show .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--gray-500);
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--gray-200);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: var(--gray-200);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: var(--primary);
+      border-radius: 9999px;
+    }
+
+    /* Callout */
+    .callout {
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid;
+      margin-bottom: 1.5rem;
+    }
+
+    .callout-info {
+      background-color: rgba(37, 99, 235, 0.05);
+      border-left-color: var(--primary);
+    }
+
+    .callout-warning {
+      background-color: rgba(245, 158, 11, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .callout-error {
+      background-color: rgba(239, 68, 68, 0.05);
+      border-left-color: var(--danger);
+    }
+
+    .callout-success {
+      background-color: rgba(16, 185, 129, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .callout-title {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .callout-body {
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    /* Icons */
+    .icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      stroke-width: 0;
+      stroke: currentColor;
+      fill: currentColor;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">Universitas IIU</a>
+        <div class="nav-links" id="navLinks">
+          <a href="#" class="nav-link active" data-target="dashboard">Dashboard</a>
+          <a href="#" class="nav-link" data-target="courses">Mata Kuliah</a>
+          <a href="#" class="nav-link" data-target="schedule">Jadwal</a>
+          <a href="#" class="nav-link" data-target="assignments">Tugas</a>
+          <a href="#" class="nav-link" data-target="grades">Nilai</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="dropdown">
+            <div class="user-menu">
+              <div class="avatar">A</div>
+              <span class="user-name">Andi Wijaya</span>
+            </div>
+            <div class="dropdown-content">
+              <a href="#" data-target="profile">Profil</a>
+              <a href="#" data-target="settings">Pengaturan</a>
+              <a href="#" data-target="auth">Keluar</a>
+            </div>
+          </div>
+          <button class="menu-btn" id="menuBtn">☰</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+      <!-- Pages -->
+      
+      <!-- Auth (Login/Register) Page -->
+      <div class="page auth-container" data-page="auth">
+        <div class="auth-card">
+          <div class="auth-header">
+            <div class="auth-logo">Universitas IIU</div>
+            <h1 class="auth-title">Masuk ke Portal Mahasiswa</h1>
+            <p class="auth-description">Masukkan username dan password Anda untuk melanjutkan</p>
+          </div>
+          <div class="auth-body">
+            <div class="tabs">
+              <div class="tab active" data-tab="login">Masuk</div>
+              <div class="tab" data-tab="register">Daftar</div>
+            </div>
+            
+            <div class="tab-content active" data-tab-content="login">
+              <form class="form" id="loginForm">
+                <div class="form-group">
+                  <label for="loginUsername" class="form-label">Username</label>
+                  <input type="text" id="loginUsername" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="loginPassword" class="form-label">Password</label>
+                  <input type="password" id="loginPassword" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Masuk</button>
+              </form>
+            </div>
+            
+            <div class="tab-content" data-tab-content="register">
+              <form class="form" id="registerForm">
+                <div class="form-group">
+                  <label for="registerFirstName" class="form-label">Nama Depan</label>
+                  <input type="text" id="registerFirstName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="registerLastName" class="form-label">Nama Belakang</label>
+                  <input type="text" id="registerLastName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="registerEmail" class="form-label">Email</label>
+                  <input type="email" id="registerEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="registerUsername" class="form-label">Username</label>
+                  <input type="text" id="registerUsername" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="registerPassword" class="form-label">Password</label>
+                  <input type="password" id="registerPassword" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label for="registerRole" class="form-label">Peran</label>
+                  <select id="registerRole" class="form-select">
+                    <option value="student">Mahasiswa</option>
+                    <option value="teacher">Dosen</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Daftar</button>
+              </form>
+            </div>
+          </div>
+          <div class="auth-footer">
+            <p>Kembali ke <a href="static_site.html" class="auth-link">Website Universitas</a></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Dashboard Page -->
+      <div class="page hidden" data-page="dashboard">
+        <div class="page-header">
+          <h1 class="page-title">Dashboard</h1>
+          <p>Selamat datang, Andi Wijaya!</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="stat-card">
+            <p class="stat-title">Mata Kuliah Terdaftar</p>
+            <p class="stat-value">4</p>
+            <p class="stat-footer">Semester Ganjil 2024/2025</p>
+          </div>
+          <div class="stat-card" style="border-left-color: var(--success);">
+            <p class="stat-title">Tugas Selesai</p>
+            <p class="stat-value">12</p>
+            <p class="stat-footer">Dari total 15 tugas</p>
+          </div>
+          <div class="stat-card" style="border-left-color: var(--warning);">
+            <p class="stat-title">Rata-rata Nilai</p>
+            <p class="stat-value">3.75</p>
+            <p class="stat-footer">Dari 4 mata kuliah</p>
+          </div>
+        </div>
+        
+        <div class="dashboard-grid">
+          <div>
+            <div class="section">
+              <div class="section-title">Mata Kuliah Terdaftar</div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Course Card 1 -->
+                <div class="card course-card">
+                  <div class="card-body">
+                    <div class="course-meta">
+                      <span>3 SKS</span>
+                      <span class="badge badge-primary">Aktif</span>
+                    </div>
+                    <h3 class="card-title mb-2">Pemrograman Web Lanjut</h3>
+                    <p class="mb-4 text-muted">Belajar konsep dan teknik pengembangan web modern dengan HTML5, CSS3, dan JavaScript.</p>
+                    <div class="progress-bar mb-2">
+                      <div class="progress" style="width: 75%;"></div>
+                    </div>
+                    <div class="text-sm text-right">75% selesai</div>
+                    <div class="course-instructor">
+                      <div class="instructor-avatar">DR</div>
+                      <div>
+                        <div class="font-semibold">Dr. Rudi Sutanto</div>
+                        <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <a href="#" class="btn btn-primary btn-sm">Lihat Detail</a>
+                  </div>
+                </div>
+                
+                <!-- Course Card 2 -->
+                <div class="card course-card">
+                  <div class="card-body">
+                    <div class="course-meta">
+                      <span>3 SKS</span>
+                      <span class="badge badge-primary">Aktif</span>
+                    </div>
+                    <h3 class="card-title mb-2">Basis Data Lanjut</h3>
+                    <p class="mb-4 text-muted">Mempelajari konsep database lanjutan, optimasi kueri, dan database terdistribusi.</p>
+                    <div class="progress-bar mb-2">
+                      <div class="progress" style="width: 60%;"></div>
+                    </div>
+                    <div class="text-sm text-right">60% selesai</div>
+                    <div class="course-instructor">
+                      <div class="instructor-avatar">SH</div>
+                      <div>
+                        <div class="font-semibold">Prof. Siti Hajar</div>
+                        <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <a href="#" class="btn btn-primary btn-sm">Lihat Detail</a>
+                  </div>
+                </div>
+                
+                <!-- Course Card 3 -->
+                <div class="card course-card">
+                  <div class="card-body">
+                    <div class="course-meta">
+                      <span>2 SKS</span>
+                      <span class="badge badge-primary">Aktif</span>
+                    </div>
+                    <h3 class="card-title mb-2">Kecerdasan Buatan</h3>
+                    <p class="mb-4 text-muted">Pengenalan pada konsep AI, machine learning, dan aplikasinya dalam kehidupan nyata.</p>
+                    <div class="progress-bar mb-2">
+                      <div class="progress" style="width: 40%;"></div>
+                    </div>
+                    <div class="text-sm text-right">40% selesai</div>
+                    <div class="course-instructor">
+                      <div class="instructor-avatar">AG</div>
+                      <div>
+                        <div class="font-semibold">Dr. Ahmad Gunawan</div>
+                        <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <a href="#" class="btn btn-primary btn-sm">Lihat Detail</a>
+                  </div>
+                </div>
+                
+                <!-- Course Card 4 -->
+                <div class="card course-card">
+                  <div class="card-body">
+                    <div class="course-meta">
+                      <span>3 SKS</span>
+                      <span class="badge badge-primary">Aktif</span>
+                    </div>
+                    <h3 class="card-title mb-2">Jaringan Komputer</h3>
+                    <p class="mb-4 text-muted">Mempelajari fundamental jaringan komputer, protokol, dan keamanan jaringan.</p>
+                    <div class="progress-bar mb-2">
+                      <div class="progress" style="width: 50%;"></div>
+                    </div>
+                    <div class="text-sm text-right">50% selesai</div>
+                    <div class="course-instructor">
+                      <div class="instructor-avatar">DW</div>
+                      <div>
+                        <div class="font-semibold">Dr. Dewi Wulandari</div>
+                        <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <a href="#" class="btn btn-primary btn-sm">Lihat Detail</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="section">
+              <div class="section-title">Tugas Mendatang</div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Tugas</th>
+                          <th>Mata Kuliah</th>
+                          <th>Tenggat</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Proyek Web Framework</td>
+                          <td>Pemrograman Web Lanjut</td>
+                          <td>25 Mar 2025</td>
+                          <td><span class="badge badge-warning">3 hari lagi</span></td>
+                        </tr>
+                        <tr>
+                          <td>Proposal Penelitian AI</td>
+                          <td>Kecerdasan Buatan</td>
+                          <td>2 Apr 2025</td>
+                          <td><span class="badge badge-success">11 hari lagi</span></td>
+                        </tr>
+                        <tr>
+                          <td>Tugas Optimasi Kueri</td>
+                          <td>Basis Data Lanjut</td>
+                          <td>5 Apr 2025</td>
+                          <td><span class="badge badge-success">14 hari lagi</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="card mb-6">
+              <div class="card-header">
+                <h3 class="card-title">Kalender Akademik</h3>
+              </div>
+              <div class="card-body">
+                <div class="mb-4">
+                  <div class="font-semibold">22 Mar 2025</div>
+                  <div class="text-muted">Batas Akhir Pembayaran UKT</div>
+                </div>
+                <div class="mb-4">
+                  <div class="font-semibold">1-5 Apr 2025</div>
+                  <div class="text-muted">Ujian Tengah Semester</div>
+                </div>
+                <div class="mb-4">
+                  <div class="font-semibold">15 Apr 2025</div>
+                  <div class="text-muted">Pengumuman Beasiswa</div>
+                </div>
+                <div>
+                  <div class="font-semibold">20-25 Jun 2025</div>
+                  <div class="text-muted">Ujian Akhir Semester</div>
+                </div>
+              </div>
+              <div class="card-footer text-center">
+                <a href="#" class="btn btn-sm btn-secondary">Lihat Semua</a>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Aktivitas Terbaru</h3>
+              </div>
+              <div class="card-body">
+                <div class="activity-item">
+                  <div class="activity-icon">📝</div>
+                  <div class="activity-content">
+                    <div class="activity-title">Kuis ditambahkan di Basis Data Lanjut</div>
+                    <div class="activity-time">Kemarin, 14:30</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon">📚</div>
+                  <div class="activity-content">
+                    <div class="activity-title">Materi baru di Pemrograman Web Lanjut</div>
+                    <div class="activity-time">19 Mar 2025, 09:15</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon">✅</div>
+                  <div class="activity-content">
+                    <div class="activity-title">Tugas anda telah dinilai</div>
+                    <div class="activity-time">18 Mar 2025, 16:45</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Courses Page -->
+      <div class="page hidden" data-page="courses">
+        <div class="page-header">
+          <h1 class="page-title">Katalog Mata Kuliah</h1>
+          <p>Semua mata kuliah yang tersedia untuk semester Ganjil 2024/2025</p>
+        </div>
+        
+        <div class="flex mb-6">
+          <div class="form-group" style="width: 250px;">
+            <select class="form-select">
+              <option value="">Semua Fakultas</option>
+              <option value="computer-science">Ilmu Komputer</option>
+              <option value="engineering">Teknik</option>
+              <option value="business">Bisnis & Ekonomi</option>
+              <option value="humanities">Humaniora</option>
+              <option value="social-science">Ilmu Sosial</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Ilmu Komputer</div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Course 1 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>3 SKS</span>
+                  <span class="badge badge-success">Tersedia</span>
+                </div>
+                <h3 class="card-title mb-2">Pemrograman Web Lanjut</h3>
+                <p class="mb-4 text-muted">Belajar konsep dan teknik pengembangan web modern dengan HTML5, CSS3, dan JavaScript.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">DR</div>
+                  <div>
+                    <div class="font-semibold">Dr. Rudi Sutanto</div>
+                    <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-primary btn-sm course-enroll-btn" data-course-id="cs101">Daftar</a>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+            
+            <!-- Course 2 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>3 SKS</span>
+                  <span class="badge badge-success">Tersedia</span>
+                </div>
+                <h3 class="card-title mb-2">Basis Data Lanjut</h3>
+                <p class="mb-4 text-muted">Mempelajari konsep database lanjutan, optimasi kueri, dan database terdistribusi.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">SH</div>
+                  <div>
+                    <div class="font-semibold">Prof. Siti Hajar</div>
+                    <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-primary btn-sm course-enroll-btn" data-course-id="cs201">Daftar</a>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+            
+            <!-- Course 3 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>2 SKS</span>
+                  <span class="badge badge-success">Tersedia</span>
+                </div>
+                <h3 class="card-title mb-2">Kecerdasan Buatan</h3>
+                <p class="mb-4 text-muted">Pengenalan pada konsep AI, machine learning, dan aplikasinya dalam kehidupan nyata.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">AG</div>
+                  <div>
+                    <div class="font-semibold">Dr. Ahmad Gunawan</div>
+                    <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-primary btn-sm course-enroll-btn" data-course-id="cs301">Daftar</a>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+            
+            <!-- Course 4 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>3 SKS</span>
+                  <span class="badge badge-success">Tersedia</span>
+                </div>
+                <h3 class="card-title mb-2">Jaringan Komputer</h3>
+                <p class="mb-4 text-muted">Mempelajari fundamental jaringan komputer, protokol, dan keamanan jaringan.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">DW</div>
+                  <div>
+                    <div class="font-semibold">Dr. Dewi Wulandari</div>
+                    <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-primary btn-sm course-enroll-btn" data-course-id="cs401">Daftar</a>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+            
+            <!-- Course 5 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>3 SKS</span>
+                  <span class="badge badge-success">Tersedia</span>
+                </div>
+                <h3 class="card-title mb-2">Pemrograman Mobile</h3>
+                <p class="mb-4 text-muted">Pengembangan aplikasi mobile untuk Android dan iOS dengan React Native.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">BP</div>
+                  <div>
+                    <div class="font-semibold">Bambang Prasetyo, Ph.D</div>
+                    <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-primary btn-sm course-enroll-btn" data-course-id="cs501">Daftar</a>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+            
+            <!-- Course 6 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>3 SKS</span>
+                  <span class="badge badge-danger">Penuh</span>
+                </div>
+                <h3 class="card-title mb-2">Data Science</h3>
+                <p class="mb-4 text-muted">Pengolahan dan analisis data besar, visualisasi data, dan penerapan model prediktif.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">RN</div>
+                  <div>
+                    <div class="font-semibold">Dr. Ratna Nurazizah</div>
+                    <div class="text-sm text-muted">Fakultas Ilmu Komputer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-secondary btn-sm" disabled>Daftar</button>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Teknik</div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Course 7 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>3 SKS</span>
+                  <span class="badge badge-success">Tersedia</span>
+                </div>
+                <h3 class="card-title mb-2">Sistem Kontrol</h3>
+                <p class="mb-4 text-muted">Pengenalan teori sistem kontrol dan penerapannya dalam rekayasa elektro.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">BS</div>
+                  <div>
+                    <div class="font-semibold">Prof. Budi Santoso</div>
+                    <div class="text-sm text-muted">Fakultas Teknik</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-primary btn-sm course-enroll-btn" data-course-id="eng101">Daftar</a>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+            
+            <!-- Course 8 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>3 SKS</span>
+                  <span class="badge badge-success">Tersedia</span>
+                </div>
+                <h3 class="card-title mb-2">Termodinamika</h3>
+                <p class="mb-4 text-muted">Mempelajari prinsip-prinsip konversi panas dan kerja dalam sistem mekanik.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">YS</div>
+                  <div>
+                    <div class="font-semibold">Dr. Yudi Santosa</div>
+                    <div class="text-sm text-muted">Fakultas Teknik</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-primary btn-sm course-enroll-btn" data-course-id="eng201">Daftar</a>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+            
+            <!-- Course 9 -->
+            <div class="card course-card">
+              <div class="card-body">
+                <div class="course-meta">
+                  <span>3 SKS</span>
+                  <span class="badge badge-success">Tersedia</span>
+                </div>
+                <h3 class="card-title mb-2">Desain Industri</h3>
+                <p class="mb-4 text-muted">Konsep dan praktik dalam perancangan produk industri yang efisien dan estetis.</p>
+                <div class="course-instructor">
+                  <div class="instructor-avatar">NN</div>
+                  <div>
+                    <div class="font-semibold">Dr. Nina Nurlela</div>
+                    <div class="text-sm text-muted">Fakultas Teknik</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="#" class="btn btn-primary btn-sm course-enroll-btn" data-course-id="eng301">Daftar</a>
+                <a href="#" class="btn btn-secondary btn-sm">Detail</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Schedule Page -->
+      <div class="page hidden" data-page="schedule">
+        <div class="page-header">
+          <h1 class="page-title">Jadwal Kuliah</h1>
+          <p>Jadwal kuliah Anda untuk semester Ganjil 2024/2025</p>
+        </div>
+        
+        <div class="section">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Waktu</th>
+                      <th>Senin</th>
+                      <th>Selasa</th>
+                      <th>Rabu</th>
+                      <th>Kamis</th>
+                      <th>Jumat</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>08:00 - 09:40</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>Pemrograman Web Lanjut<br/><span class="text-sm text-muted">Ruang L3.01</span></td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>10:00 - 11:40</td>
+                      <td>-</td>
+                      <td>Kecerdasan Buatan<br/><span class="text-sm text-muted">Ruang L2.03</span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>13:00 - 14:40</td>
+                      <td>Basis Data Lanjut<br/><span class="text-sm text-muted">Lab Komputer 2</span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>15:00 - 16:40</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>Jaringan Komputer<br/><span class="text-sm text-muted">Lab Komputer 3</span></td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Jadwal Ujian</div>
+          <div class="card">
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Mata Kuliah</th>
+                      <th>Tanggal</th>
+                      <th>Waktu</th>
+                      <th>Ruang</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Pemrograman Web Lanjut</td>
+                      <td>1 Apr 2025</td>
+                      <td>08:00 - 10:00</td>
+                      <td>Ruang L3.01</td>
+                    </tr>
+                    <tr>
+                      <td>Basis Data Lanjut</td>
+                      <td>2 Apr 2025</td>
+                      <td>13:00 - 15:00</td>
+                      <td>Lab Komputer 2</td>
+                    </tr>
+                    <tr>
+                      <td>Kecerdasan Buatan</td>
+                      <td>3 Apr 2025</td>
+                      <td>10:00 - 12:00</td>
+                      <td>Ruang L2.03</td>
+                    </tr>
+                    <tr>
+                      <td>Jaringan Komputer</td>
+                      <td>5 Apr 2025</td>
+                      <td>13:00 - 15:00</td>
+                      <td>Lab Komputer 3</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Assignments Page -->
+      <div class="page hidden" data-page="assignments">
+        <div class="page-header">
+          <h1 class="page-title">Tugas</h1>
+          <p>Daftar semua tugas dari mata kuliah yang Anda ambil</p>
+        </div>
+        
+        <div class="card mb-6">
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tugas</th>
+                    <th>Mata Kuliah</th>
+                    <th>Tenggat</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Tugas 1: Membuat Layout Web Responsif</td>
+                    <td>Pemrograman Web Lanjut</td>
+                    <td>15 Mar 2025</td>
+                    <td><span class="badge badge-success">Selesai</span></td>
+                    <td><a href="#" class="btn btn-secondary btn-sm">Lihat</a></td>
+                  </tr>
+                  <tr>
+                    <td>Tugas 2: Integrasi API dengan JavaScript</td>
+                    <td>Pemrograman Web Lanjut</td>
+                    <td>5 Mar 2025</td>
+                    <td><span class="badge badge-success">Selesai</span></td>
+                    <td><a href="#" class="btn btn-secondary btn-sm">Lihat</a></td>
+                  </tr>
+                  <tr>
+                    <td>Proyek Web Framework</td>
+                    <td>Pemrograman Web Lanjut</td>
+                    <td>25 Mar 2025</td>
+                    <td><span class="badge badge-warning">Aktif</span></td>
+                    <td><a href="#" class="btn btn-primary btn-sm">Kerjakan</a></td>
+                  </tr>
+                  <tr>
+                    <td>Tugas Optimasi Kueri</td>
+                    <td>Basis Data Lanjut</td>
+                    <td>5 Apr 2025</td>
+                    <td><span class="badge badge-warning">Aktif</span></td>
+                    <td><a href="#" class="btn btn-primary btn-sm">Kerjakan</a></td>
+                  </tr>
+                  <tr>
+                    <td>Tugas 1: Desain Database Terdistribusi</td>
+                    <td>Basis Data Lanjut</td>
+                    <td>10 Mar 2025</td>
+                    <td><span class="badge badge-success">Selesai</span></td>
+                    <td><a href="#" class="btn btn-secondary btn-sm">Lihat</a></td>
+                  </tr>
+                  <tr>
+                    <td>Proposal Penelitian AI</td>
+                    <td>Kecerdasan Buatan</td>
+                    <td>2 Apr 2025</td>
+                    <td><span class="badge badge-warning">Aktif</span></td>
+                    <td><a href="#" class="btn btn-primary btn-sm">Kerjakan</a></td>
+                  </tr>
+                  <tr>
+                    <td>Tugas 1: Analisis Topologi Jaringan</td>
+                    <td>Jaringan Komputer</td>
+                    <td>5 Mar 2025</td>
+                    <td><span class="badge badge-success">Selesai</span></td>
+                    <td><a href="#" class="btn btn-secondary btn-sm">Lihat</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Upload Tugas</div>
+          <div class="card">
+            <div class="card-body">
+              <form class="form">
+                <div class="form-group">
+                  <label for="assignmentSelect" class="form-label">Pilih Tugas</label>
+                  <select id="assignmentSelect" class="form-select">
+                    <option value="">-- Pilih Tugas --</option>
+                    <option value="1">Proyek Web Framework - Pemrograman Web Lanjut</option>
+                    <option value="2">Tugas Optimasi Kueri - Basis Data Lanjut</option>
+                    <option value="3">Proposal Penelitian AI - Kecerdasan Buatan</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="fileUpload" class="form-label">Upload File</label>
+                  <input type="file" id="fileUpload" class="form-input">
+                  <p class="text-sm text-muted mt-2">Format yang didukung: PDF, DOCX, ZIP. Ukuran maksimum: 10MB</p>
+                </div>
+                <div class="form-group">
+                  <label for="assignmentDescription" class="form-label">Keterangan (opsional)</label>
+                  <textarea id="assignmentDescription" class="form-input" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload Tugas</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Grades Page -->
+      <div class="page hidden" data-page="grades">
+        <div class="page-header">
+          <h1 class="page-title">Nilai Akademik</h1>
+          <p>Nilai akademik Anda untuk semester Ganjil 2024/2025</p>
+        </div>
+        
+        <div class="section">
+          <div class="card mb-6">
+            <div class="card-header">
+              <h3 class="card-title">Ringkasan Nilai</h3>
+            </div>
+            <div class="card-body">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h4 class="mb-4 font-semibold">Indeks Prestasi Semester (IPS)</h4>
+                  <div class="text-2xl font-bold mb-2">3.75</div>
+                  <div class="progress-bar mb-2">
+                    <div class="progress" style="width: 94%;"></div>
+                  </div>
+                  <p class="text-sm text-muted">12 SKS selesai dari total 12 SKS</p>
+                </div>
+                <div>
+                  <h4 class="mb-4 font-semibold">Indeks Prestasi Kumulatif (IPK)</h4>
+                  <div class="text-2xl font-bold mb-2">3.65</div>
+                  <div class="progress-bar mb-2">
+                    <div class="progress" style="width: 91%;"></div>
+                  </div>
+                  <p class="text-sm text-muted">72 SKS selesai dari total 144 SKS</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Detail Nilai Mata Kuliah</h3>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Mata Kuliah</th>
+                      <th>SKS</th>
+                      <th>Tugas</th>
+                      <th>UTS</th>
+                      <th>UAS</th>
+                      <th>Nilai Akhir</th>
+                      <th>Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Pemrograman Web Lanjut</td>
+                      <td>3</td>
+                      <td>85</td>
+                      <td>88</td>
+                      <td>90</td>
+                      <td>88</td>
+                      <td><span class="badge badge-success">A</span></td>
+                    </tr>
+                    <tr>
+                      <td>Basis Data Lanjut</td>
+                      <td>3</td>
+                      <td>80</td>
+                      <td>78</td>
+                      <td>85</td>
+                      <td>81</td>
+                      <td><span class="badge badge-success">A-</span></td>
+                    </tr>
+                    <tr>
+                      <td>Kecerdasan Buatan</td>
+                      <td>2</td>
+                      <td>75</td>
+                      <td>72</td>
+                      <td>78</td>
+                      <td>75</td>
+                      <td><span class="badge badge-primary">B+</span></td>
+                    </tr>
+                    <tr>
+                      <td>Jaringan Komputer</td>
+                      <td>3</td>
+                      <td>82</td>
+                      <td>85</td>
+                      <td>80</td>
+                      <td>82</td>
+                      <td><span class="badge badge-success">A-</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mt-4">
+                <p class="text-sm text-muted">Konversi Nilai: A (85-100), A- (80-84), B+ (75-79), B (70-74), B- (65-69), C+ (60-64), C (55-59), D (40-54), E (&lt;40)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <div class="section-title">Histori Akademik</div>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Indeks Prestasi per Semester</h3>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Semester</th>
+                      <th>Tahun Akademik</th>
+                      <th>SKS</th>
+                      <th>IPS</th>
+                      <th>IPK</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Semester 1</td>
+                      <td>2022/2023 Ganjil</td>
+                      <td>20</td>
+                      <td>3.55</td>
+                      <td>3.55</td>
+                    </tr>
+                    <tr>
+                      <td>Semester 2</td>
+                      <td>2022/2023 Genap</td>
+                      <td>20</td>
+                      <td>3.60</td>
+                      <td>3.58</td>
+                    </tr>
+                    <tr>
+                      <td>Semester 3</td>
+                      <td>2023/2024 Ganjil</td>
+                      <td>20</td>
+                      <td>3.70</td>
+                      <td>3.62</td>
+                    </tr>
+                    <tr>
+                      <td>Semester 4</td>
+                      <td>2023/2024 Genap</td>
+                      <td>12</td>
+                      <td>3.75</td>
+                      <td>3.65</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Profile Page -->
+      <div class="page hidden" data-page="profile">
+        <div class="page-header">
+          <h1 class="page-title">Profil</h1>
+          <p>Lihat dan perbarui informasi profil Anda</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card">
+            <div class="card-body text-center">
+              <div style="width: 120px; height: 120px; background-color: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; margin: 0 auto 1.5rem;">A</div>
+              <h2 class="text-xl font-bold mb-1">Andi Wijaya</h2>
+              <p class="text-muted mb-4">Mahasiswa</p>
+              <div class="mb-4">
+                <p><strong>NIM:</strong> 2022001234</p>
+                <p><strong>Program Studi:</strong> Teknik Informatika</p>
+                <p><strong>Fakultas:</strong> Ilmu Komputer</p>
+                <p><strong>Angkatan:</strong> 2022</p>
+              </div>
+              <button class="btn btn-secondary btn-sm">Ubah Foto Profil</button>
+            </div>
+          </div>
+          
+          <div class="md:col-span-2">
+            <div class="card mb-6">
+              <div class="card-header">
+                <h3 class="card-title">Informasi Pribadi</h3>
+              </div>
+              <div class="card-body">
+                <form class="form">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="form-group">
+                      <label class="form-label">Nama Depan</label>
+                      <input type="text" class="form-input" value="Andi" disabled>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Nama Belakang</label>
+                      <input type="text" class="form-input" value="Wijaya" disabled>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="form-group">
+                      <label class="form-label">Email</label>
+                      <input type="email" class="form-input" value="andi.wijaya@student.iiu.ac.id">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">No. Telepon</label>
+                      <input type="tel" class="form-input" value="085712345678">
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="form-group">
+                      <label class="form-label">Tanggal Lahir</label>
+                      <input type="date" class="form-input" value="2001-05-15">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Jenis Kelamin</label>
+                      <select class="form-select">
+                        <option value="male" selected>Laki-laki</option>
+                        <option value="female">Perempuan</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group mb-4">
+                    <label class="form-label">Alamat</label>
+                    <textarea class="form-input" rows="3">Jl. Kenanga No. 123, Bandung</textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </form>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Ubah Password</h3>
+              </div>
+              <div class="card-body">
+                <form class="form">
+                  <div class="form-group">
+                    <label class="form-label">Password Lama</label>
+                    <input type="password" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Password Baru</label>
+                    <input type="password" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Konfirmasi Password Baru</label>
+                    <input type="password" class="form-input">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Ubah Password</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Settings Page -->
+      <div class="page hidden" data-page="settings">
+        <div class="page-header">
+          <h1 class="page-title">Pengaturan</h1>
+          <p>Kustomisasi pengaturan akun Anda</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Menu Pengaturan</h3>
+              </div>
+              <div class="card-body" style="padding: 0;">
+                <div style="border-bottom: 1px solid var(--gray-200); padding: 1rem 1.5rem; font-weight: 500; color: var(--primary); background-color: var(--gray-50);">Pengaturan Umum</div>
+                <div style="border-bottom: 1px solid var(--gray-200); padding: 1rem 1.5rem;">Notifikasi</div>
+                <div style="border-bottom: 1px solid var(--gray-200); padding: 1rem 1.5rem;">Privasi</div>
+                <div style="padding: 1rem 1.5rem;">Koneksi Aplikasi</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="md:col-span-2">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Pengaturan Umum</h3>
+              </div>
+              <div class="card-body">
+                <form class="form">
+                  <div class="form-group">
+                    <label class="form-label">Bahasa</label>
+                    <select class="form-select">
+                      <option value="id" selected>Bahasa Indonesia</option>
+                      <option value="en">English</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Zona Waktu</label>
+                    <select class="form-select">
+                      <option value="asia_jakarta" selected>Asia/Jakarta (GMT+7)</option>
+                      <option value="asia_makassar">Asia/Makassar (GMT+8)</option>
+                      <option value="asia_jayapura">Asia/Jayapura (GMT+9)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label mb-2">Tema</label>
+                    <div class="flex gap-4">
+                      <div>
+                        <input type="radio" id="lightTheme" name="theme" value="light" checked>
+                        <label for="lightTheme" class="ml-2">Terang</label>
+                      </div>
+                      <div>
+                        <input type="radio" id="darkTheme" name="theme" value="dark">
+                        <label for="darkTheme" class="ml-2">Gelap</label>
+                      </div>
+                      <div>
+                        <input type="radio" id="systemTheme" name="theme" value="system">
+                        <label for="systemTheme" class="ml-2">Ikuti Sistem</label>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">Universitas IIU</h3>
+          <p>Portal mahasiswa untuk mengelola kegiatan akademik dengan mudah dan efisien.</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Tautan Cepat</h3>
+          <a href="#" class="footer-link" data-target="dashboard">Dashboard</a>
+          <a href="#" class="footer-link" data-target="courses">Mata Kuliah</a>
+          <a href="#" class="footer-link" data-target="schedule">Jadwal Kuliah</a>
+          <a href="#" class="footer-link" data-target="assignments">Tugas</a>
+          <a href="#" class="footer-link" data-target="grades">Nilai</a>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Layanan</h3>
+          <a href="static_site.html" class="footer-link">Website Utama</a>
+          <a href="#" class="footer-link">Perpustakaan Digital</a>
+          <a href="#" class="footer-link">Beasiswa</a>
+          <a href="#" class="footer-link">Alumni</a>
+          <a href="#" class="footer-link">Karir</a>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Kontak</h3>
+          <p>Jl. Pendidikan No. 123<br>Kota, Provinsi 12345</p>
+          <p>Email: info@universitas-iiu.ac.id<br>Telp: (021) 123-4567</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Universitas IIU. Hak Cipta Dilindungi.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Judul Modal</h3>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        Konten modal akan tampil di sini.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="modalCancel">Batal</button>
+        <button class="btn btn-primary" id="modalConfirm">Konfirmasi</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample Database
+    const db = {
+      // Sample user data
+      currentUser: {
+        id: 1,
+        username: 'andi.wijaya',
+        firstName: 'Andi',
+        lastName: 'Wijaya',
+        email: 'andi.wijaya@student.iiu.ac.id',
+        role: 'student',
+      },
+      
+      users: [
+        {
+          id: 1,
+          username: 'andi.wijaya',
+          password: 'password123',
+          firstName: 'Andi',
+          lastName: 'Wijaya',
+          email: 'andi.wijaya@student.iiu.ac.id',
+          role: 'student',
+        },
+        {
+          id: 2,
+          username: 'rudi.sutanto',
+          password: 'password123',
+          firstName: 'Rudi',
+          lastName: 'Sutanto',
+          email: 'rudi.sutanto@iiu.ac.id',
+          role: 'teacher',
+        },
+      ],
+      
+      // Sample course data
+      courses: [
+        {
+          id: 'cs101',
+          code: 'CS101',
+          name: 'Pemrograman Web Lanjut',
+          faculty: 'Ilmu Komputer',
+          credits: 3,
+          description: 'Belajar konsep dan teknik pengembangan web modern dengan HTML5, CSS3, dan JavaScript.',
+          instructor: 'Dr. Rudi Sutanto',
+          schedule: 'Rabu, 08:00 - 09:40',
+          room: 'Ruang L3.01',
+          maxStudents: 30,
+          enrolledStudents: 25,
+          progress: 75,
+        },
+        {
+          id: 'cs201',
+          code: 'CS201',
+          name: 'Basis Data Lanjut',
+          faculty: 'Ilmu Komputer',
+          credits: 3,
+          description: 'Mempelajari konsep database lanjutan, optimasi kueri, dan database terdistribusi.',
+          instructor: 'Prof. Siti Hajar',
+          schedule: 'Senin, 13:00 - 14:40',
+          room: 'Lab Komputer 2',
+          maxStudents: 25,
+          enrolledStudents: 20,
+          progress: 60,
+        },
+        {
+          id: 'cs301',
+          code: 'CS301',
+          name: 'Kecerdasan Buatan',
+          faculty: 'Ilmu Komputer',
+          credits: 2,
+          description: 'Pengenalan pada konsep AI, machine learning, dan aplikasinya dalam kehidupan nyata.',
+          instructor: 'Dr. Ahmad Gunawan',
+          schedule: 'Selasa, 10:00 - 11:40',
+          room: 'Ruang L2.03',
+          maxStudents: 30,
+          enrolledStudents: 28,
+          progress: 40,
+        },
+        {
+          id: 'cs401',
+          code: 'CS401',
+          name: 'Jaringan Komputer',
+          faculty: 'Ilmu Komputer',
+          credits: 3,
+          description: 'Mempelajari fundamental jaringan komputer, protokol, dan keamanan jaringan.',
+          instructor: 'Dr. Dewi Wulandari',
+          schedule: 'Kamis, 15:00 - 16:40',
+          room: 'Lab Komputer 3',
+          maxStudents: 25,
+          enrolledStudents: 22,
+          progress: 50,
+        },
+      ],
+      
+      // Sample enrollment data
+      enrollments: [
+        { userId: 1, courseId: 'cs101' },
+        { userId: 1, courseId: 'cs201' },
+        { userId: 1, courseId: 'cs301' },
+        { userId: 1, courseId: 'cs401' },
+      ],
+      
+      // Sample assignment data
+      assignments: [
+        {
+          id: 1,
+          courseId: 'cs101',
+          title: 'Tugas 1: Membuat Layout Web Responsif',
+          description: 'Membuat layout web yang responsif menggunakan HTML5 dan CSS3.',
+          dueDate: '2025-03-15',
+          status: 'completed',
+        },
+        {
+          id: 2,
+          courseId: 'cs101',
+          title: 'Tugas 2: Integrasi API dengan JavaScript',
+          description: 'Mengintegrasikan aplikasi web dengan REST API menggunakan JavaScript.',
+          dueDate: '2025-03-05',
+          status: 'completed',
+        },
+        {
+          id: 3,
+          courseId: 'cs101',
+          title: 'Proyek Web Framework',
+          description: 'Membuat aplikasi web menggunakan salah satu framework JavaScript modern.',
+          dueDate: '2025-03-25',
+          status: 'active',
+        },
+        {
+          id: 4,
+          courseId: 'cs201',
+          title: 'Tugas 1: Desain Database Terdistribusi',
+          description: 'Merancang database terdistribusi untuk studi kasus e-commerce.',
+          dueDate: '2025-03-10',
+          status: 'completed',
+        },
+        {
+          id: 5,
+          courseId: 'cs201',
+          title: 'Tugas Optimasi Kueri',
+          description: 'Mengoptimalkan kueri SQL untuk meningkatkan performa database.',
+          dueDate: '2025-04-05',
+          status: 'active',
+        },
+        {
+          id: 6,
+          courseId: 'cs301',
+          title: 'Proposal Penelitian AI',
+          description: 'Menulis proposal penelitian untuk proyek AI dalam bidang yang diminati.',
+          dueDate: '2025-04-02',
+          status: 'active',
+        },
+        {
+          id: 7,
+          courseId: 'cs401',
+          title: 'Tugas 1: Analisis Topologi Jaringan',
+          description: 'Menganalisis berbagai topologi jaringan dan membuat laporan perbandingan.',
+          dueDate: '2025-03-05',
+          status: 'completed',
+        },
+      ],
+      
+      // Sample grades data
+      grades: [
+        {
+          userId: 1,
+          courseId: 'cs101',
+          assignments: 85,
+          midterm: 88,
+          final: 90,
+          overall: 88,
+          grade: 'A',
+        },
+        {
+          userId: 1,
+          courseId: 'cs201',
+          assignments: 80,
+          midterm: 78,
+          final: 85,
+          overall: 81,
+          grade: 'A-',
+        },
+        {
+          userId: 1,
+          courseId: 'cs301',
+          assignments: 75,
+          midterm: 72,
+          final: 78,
+          overall: 75,
+          grade: 'B+',
+        },
+        {
+          userId: 1,
+          courseId: 'cs401',
+          assignments: 82,
+          midterm: 85,
+          final: 80,
+          overall: 82,
+          grade: 'A-',
+        },
+      ],
+    };
+
+    // DOM Elements
+    const navLinks = document.querySelectorAll('.nav-link, .footer-link');
+    const pages = document.querySelectorAll('.page');
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinksContainer = document.getElementById('navLinks');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const courseEnrollBtns = document.querySelectorAll('.course-enroll-btn');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalClose = document.getElementById('modalClose');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const toastContainer = document.getElementById('toastContainer');
+
+    // Navigation
+    function showPage(pageId) {
+      pages.forEach(page => {
+        if (page.dataset.page === pageId) {
+          page.classList.remove('hidden');
+        } else {
+          page.classList.add('hidden');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        if (link.dataset.target === pageId) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+      
+      // Close mobile menu if open
+      navLinksContainer.classList.remove('show');
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Initialize with auth page
+    showPage('auth');
+
+    // Navigation event listeners
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetPage = link.dataset.target;
+        showPage(targetPage);
+      });
+    });
+
+    // Mobile menu toggle
+    menuBtn.addEventListener('click', () => {
+      navLinksContainer.classList.toggle('show');
+    });
+
+    // Tab system
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabId = tab.dataset.tab;
+        
+        // Update active tab
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Show corresponding content
+        tabContents.forEach(content => {
+          if (content.dataset.tabContent === tabId) {
+            content.classList.add('active');
+          } else {
+            content.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Authentication forms
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      // Simple login validation (in real app, this would be a server request)
+      const user = db.users.find(u => u.username === username && u.password === password);
+      
+      if (user) {
+        // Set current user and redirect to dashboard
+        db.currentUser = user;
+        showToast('success', 'Login berhasil', 'Selamat datang di Portal Mahasiswa Universitas IIU');
+        showPage('dashboard');
+      } else {
+        showToast('error', 'Login gagal', 'Username atau password salah');
+      }
+    });
+
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const firstName = document.getElementById('registerFirstName').value;
+      const lastName = document.getElementById('registerLastName').value;
+      const email = document.getElementById('registerEmail').value;
+      const username = document.getElementById('registerUsername').value;
+      const password = document.getElementById('registerPassword').value;
+      const role = document.getElementById('registerRole').value;
+      
+      // Check if username already exists
+      if (db.users.some(u => u.username === username)) {
+        showToast('error', 'Registrasi gagal', 'Username sudah digunakan');
+        return;
+      }
+      
+      // Create new user (in real app, this would be a server request)
+      const newUser = {
+        id: db.users.length + 1,
+        username,
+        password,
+        firstName,
+        lastName,
+        email,
+        role,
+      };
+      
+      db.users.push(newUser);
+      db.currentUser = newUser;
+      
+      showToast('success', 'Registrasi berhasil', 'Akun Anda telah dibuat dan Anda telah login');
+      showPage('dashboard');
+    });
+
+    // Course enrollment
+    courseEnrollBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const courseId = btn.dataset.courseId;
+        const course = db.courses.find(c => c.id === courseId);
+        
+        showModal(
+          'Konfirmasi Pendaftaran Mata Kuliah',
+          `Apakah Anda yakin ingin mendaftar ke mata kuliah <strong>${course.name}</strong>?`,
+          () => {
+            // Check if already enrolled
+            if (db.enrollments.some(e => e.userId === db.currentUser.id && e.courseId === courseId)) {
+              showToast('info', 'Informasi', 'Anda sudah terdaftar di mata kuliah ini');
+              return;
+            }
+            
+            // Enroll in course
+            db.enrollments.push({
+              userId: db.currentUser.id,
+              courseId: courseId,
+            });
+            
+            course.enrolledStudents++;
+            
+            showToast('success', 'Pendaftaran berhasil', `Anda telah berhasil mendaftar ke mata kuliah ${course.name}`);
+          }
+        );
+      });
+    });
+
+    // Modal functions
+    function showModal(title, body, confirmCallback) {
+      modalTitle.textContent = title;
+      modalBody.innerHTML = body;
+      modalBackdrop.classList.add('show');
+      
+      // Set confirm callback
+      modalConfirm.onclick = () => {
+        if (confirmCallback) confirmCallback();
+        hideModal();
+      };
+    }
+
+    function hideModal() {
+      modalBackdrop.classList.remove('show');
+    }
+
+    modalClose.addEventListener('click', hideModal);
+    modalCancel.addEventListener('click', hideModal);
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) hideModal();
+    });
+
+    // Toast notifications
+    function showToast(type, title, message, duration = 5000) {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      
+      toast.innerHTML = `
+        <div class="toast-icon">${getToastIcon(type)}</div>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          <div class="toast-message">${message}</div>
+        </div>
+        <button class="toast-close">&times;</button>
+      `;
+      
+      toastContainer.appendChild(toast);
+      
+      // Auto close after duration
+      setTimeout(() => {
+        closeToast(toast);
+      }, duration);
+      
+      // Manual close
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => {
+        closeToast(toast);
+      });
+    }
+
+    function closeToast(toast) {
+      toast.classList.add('hide');
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }
+
+    function getToastIcon(type) {
+      switch (type) {
+        case 'success': return '✓';
+        case 'error': return '✕';
+        case 'warning': return '⚠';
+        case 'info': return 'ℹ';
+        default: return 'ℹ';
+      }
+    }
+  </script>
+</body>
+</html>
