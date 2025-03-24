@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universitas IIU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: 'hsl(219, 73%, 26%)',
+              foreground: 'hsl(218, 31%, 98%)',
+            },
+            background: 'hsl(0, 0%, 100%)',
+            foreground: 'hsl(20, 14.3%, 4.1%)',
+            muted: {
+              DEFAULT: 'hsl(60, 4.8%, 95.9%)',
+              foreground: 'hsl(25, 5.3%, 44.7%)',
+            },
+            card: {
+              DEFAULT: 'hsl(0, 0%, 100%)',
+              foreground: 'hsl(20, 14.3%, 4.1%)',
+            },
+            border: 'hsl(20, 5.9%, 90%)',
+            input: 'hsl(20, 5.9%, 90%)',
+            secondary: {
+              DEFAULT: 'hsl(60, 4.8%, 95.9%)',
+              foreground: 'hsl(24, 9.8%, 10%)',
+            },
+            accent: {
+              DEFAULT: 'hsl(60, 4.8%, 95.9%)',
+              foreground: 'hsl(24, 9.8%, 10%)',
+            },
+          },
+          fontFamily: {
+            sans: ['Open Sans', 'sans-serif'],
+            serif: ['Merriweather', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Base styles */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: hsl(20, 14.3%, 4.1%);
+      background-color: hsl(0, 0%, 100%);
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+    }
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    /* Button styles */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    .btn-primary {
+      background-color: hsl(219, 73%, 26%);
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: hsl(219, 73%, 20%);
+    }
+    .btn-outline {
+      border: 1px solid hsl(219, 73%, 26%);
+      color: hsl(219, 73%, 26%);
+      background-color: transparent;
+    }
+    .btn-outline:hover {
+      background-color: hsl(219, 73%, 26%);
+      color: white;
+    }
+    /* Card styles */
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-5px);
+    }
+    /* Navigation */
+    .nav-link {
+      color: hsl(20, 14.3%, 4.1%);
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: hsl(219, 73%, 26%);
+    }
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+    }
+    .mobile-menu.active {
+      display: block;
+    }
+    /* Form elements */
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid hsl(20, 5.9%, 90%);
+      border-radius: 0.375rem;
+      background-color: white;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: hsl(219, 73%, 26%);
+      box-shadow: 0 0 0 3px rgba(0, 88, 208, 0.1);
+    }
+    .form-label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    /* Utility classes */
+    .text-primary {
+      color: hsl(219, 73%, 26%);
+    }
+    .bg-primary {
+      background-color: hsl(219, 73%, 26%);
+    }
+    .text-white {
+      color: white;
+    }
+    .rounded {
+      border-radius: 0.375rem;
+    }
+    .shadow {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .mb-2 {
+      margin-bottom: 0.5rem;
+    }
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+    .mb-6 {
+      margin-bottom: 1.5rem;
+    }
+    .mb-8 {
+      margin-bottom: 2rem;
+    }
+    .py-2 {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .py-4 {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .py-8 {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    .py-12 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    .py-16 {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    .py-24 {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+    .grid {
+      display: grid;
+    }
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    @media (min-width: 640px) {
+      .sm\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (min-width: 768px) {
+      .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    @media (min-width: 1024px) {
+      .lg\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+    .gap-4 {
+      gap: 1rem;
+    }
+    .gap-6 {
+      gap: 1.5rem;
+    }
+    .gap-8 {
+      gap: 2rem;
+    }
+    .flex {
+      display: flex;
+    }
+    .items-center {
+      align-items: center;
+    }
+    .justify-between {
+      justify-content: space-between;
+    }
+    .justify-center {
+      justify-content: center;
+    }
+    .flex-col {
+      flex-direction: column;
+    }
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+    @media (min-width: 768px) {
+      .md\:flex-row {
+        flex-direction: row;
+      }
+    }
+    .w-full {
+      width: 100%;
+    }
+    .max-w-lg {
+      max-width: 32rem;
+    }
+    .max-w-xl {
+      max-width: 36rem;
+    }
+    .max-w-2xl {
+      max-width: 42rem;
+    }
+    .max-w-3xl {
+      max-width: 48rem;
+    }
+    .max-w-4xl {
+      max-width: 56rem;
+    }
+    .max-w-5xl {
+      max-width: 64rem;
+    }
+    .max-w-6xl {
+      max-width: 72rem;
+    }
+    .mx-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .text-sm {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+    .text-base {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+    .text-lg {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+    }
+    .text-xl {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+    .text-2xl {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+    .text-3xl {
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+    .text-4xl {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+    .text-5xl {
+      font-size: 3rem;
+      line-height: 1;
+    }
+    .text-6xl {
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+    .font-bold {
+      font-weight: 700;
+    }
+    .font-semibold {
+      font-weight: 600;
+    }
+    .font-medium {
+      font-weight: 500;
+    }
+    .font-normal {
+      font-weight: 400;
+    }
+    .font-light {
+      font-weight: 300;
+    }
+    .leading-tight {
+      line-height: 1.25;
+    }
+    .leading-relaxed {
+      line-height: 1.625;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (min-width: 768px) {
+      .md\:block {
+        display: block;
+      }
+      .md\:hidden {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 bg-white shadow-md z-50">
+    <div class="container mx-auto py-4">
+      <nav class="flex items-center justify-between">
+        <a href="#" class="text-2xl font-bold text-primary" onclick="showSection('home')">Universitas IIU</a>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#" class="nav-link" onclick="showSection('home')">Home</a>
+          <a href="#" class="nav-link" onclick="showSection('about')">About</a>
+          <a href="#" class="nav-link" onclick="showSection('academics')">Academic Programs</a>
+          <a href="#" class="nav-link" onclick="showSection('news')">News & Events</a>
+          <a href="#" class="nav-link" onclick="showSection('contact')">Contact</a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden" onclick="toggleMobileMenu()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+      
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="mobile-menu mt-4 py-4 md:hidden">
+        <div class="flex flex-col space-y-4">
+          <a href="#" class="nav-link" onclick="showSection('home'); toggleMobileMenu()">Home</a>
+          <a href="#" class="nav-link" onclick="showSection('about'); toggleMobileMenu()">About</a>
+          <a href="#" class="nav-link" onclick="showSection('academics'); toggleMobileMenu()">Academic Programs</a>
+          <a href="#" class="nav-link" onclick="showSection('news'); toggleMobileMenu()">News & Events</a>
+          <a href="#" class="nav-link" onclick="showSection('contact'); toggleMobileMenu()">Contact</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME SECTION -->
+  <section id="home" class="section active">
+    <!-- Hero Section -->
+    <div class="bg-primary py-24">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-8 md:mb-0">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Welcome to Universitas IIU</h1>
+            <p class="text-lg text-white/80 mb-8">Empowering minds, inspiring futures. Join our community of scholars dedicated to excellence and innovation.</p>
+            <div class="flex space-x-4">
+              <button class="btn bg-white text-primary" onclick="showSection('academics')">Explore Programs</button>
+              <button class="btn border border-white text-white" onclick="showSection('contact')">Contact Us</button>
+            </div>
+          </div>
+          <div class="md:w-1/2 md:pl-12">
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+              <h2 class="text-2xl font-bold mb-4">Apply Today</h2>
+              <p class="mb-4">Start your journey with Universitas IIU and transform your future.</p>
+              <button class="btn btn-primary w-full" onclick="showSection('contact')">Request Information</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Features Section -->
+    <div class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Why Choose Universitas IIU</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="card p-6">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Excellence in Education</h3>
+            <p class="text-gray-600">Our rigorous academic programs are designed to challenge and inspire, preparing students for success in a competitive global environment.</p>
+          </div>
+          
+          <div class="card p-6">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Diverse Community</h3>
+            <p class="text-gray-600">Our vibrant community represents diverse backgrounds, cultures, and perspectives, creating a rich learning environment for all students.</p>
+          </div>
+          
+          <div class="card p-6">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Innovative Research</h3>
+            <p class="text-gray-600">Our faculty and students engage in cutting-edge research that addresses real-world challenges and contributes to global knowledge.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Academic Programs Overview -->
+    <div class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row">
+          <div class="md:w-1/2 mb-8 md:mb-0">
+            <h2 class="text-3xl font-bold mb-4">Academic Excellence</h2>
+            <p class="mb-6 text-gray-600">Our comprehensive range of undergraduate, graduate, and doctoral programs are designed to foster intellectual growth, critical thinking, and practical skills.</p>
+            <div class="mb-6">
+              <h3 class="text-xl font-bold mb-2">Undergraduate Programs</h3>
+              <p class="text-gray-600">Explore our diverse undergraduate offerings across various disciplines.</p>
+            </div>
+            <div class="mb-6">
+              <h3 class="text-xl font-bold mb-2">Graduate Studies</h3>
+              <p class="text-gray-600">Advance your career with our specialized master's and doctoral programs.</p>
+            </div>
+            <button class="btn btn-primary" onclick="showSection('academics')">View All Programs</button>
+          </div>
+          <div class="md:w-1/2 md:pl-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-primary/5 p-4 rounded-lg">
+                <h3 class="font-bold mb-2">Liberal Arts</h3>
+                <p class="text-sm text-gray-600">Humanities, Social Sciences, Philosophy</p>
+              </div>
+              <div class="bg-primary/5 p-4 rounded-lg">
+                <h3 class="font-bold mb-2">Sciences</h3>
+                <p class="text-sm text-gray-600">Physics, Biology, Chemistry</p>
+              </div>
+              <div class="bg-primary/5 p-4 rounded-lg">
+                <h3 class="font-bold mb-2">Business</h3>
+                <p class="text-sm text-gray-600">Management, Finance, Marketing</p>
+              </div>
+              <div class="bg-primary/5 p-4 rounded-lg">
+                <h3 class="font-bold mb-2">Engineering</h3>
+                <p class="text-sm text-gray-600">Civil, Mechanical, Computer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Testimonials -->
+    <div class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Student Testimonials</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white rounded-lg p-6 shadow">
+            <div class="text-primary mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" />
+              </svg>
+            </div>
+            <p class="text-gray-600 mb-4">"Universitas IIU has provided me with incredible opportunities to grow both academically and personally. The supportive faculty and diverse community have made my educational journey truly transformative."</p>
+            <div class="flex items-center">
+              <div class="bg-gray-200 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                <span class="font-bold text-gray-600">AB</span>
+              </div>
+              <div>
+                <h4 class="font-bold">Amira Biru</h4>
+                <p class="text-sm text-gray-500">Computer Science, Class of 2023</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg p-6 shadow">
+            <div class="text-primary mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" />
+              </svg>
+            </div>
+            <p class="text-gray-600 mb-4">"The research opportunities at Universitas IIU are unparalleled. I've been able to work alongside renowned faculty on projects that have real-world impact, preparing me for a successful career in my field."</p>
+            <div class="flex items-center">
+              <div class="bg-gray-200 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                <span class="font-bold text-gray-600">MR</span>
+              </div>
+              <div>
+                <h4 class="font-bold">Michael Rodriguez</h4>
+                <p class="text-sm text-gray-500">Environmental Science, Class of 2022</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg p-6 shadow">
+            <div class="text-primary mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" />
+              </svg>
+            </div>
+            <p class="text-gray-600 mb-4">"As an international student, I found a welcoming home at Universitas IIU. The global perspective and inclusive environment have enriched my educational experience beyond what I could have imagined."</p>
+            <div class="flex items-center">
+              <div class="bg-gray-200 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                <span class="font-bold text-gray-600">SL</span>
+              </div>
+              <div>
+                <h4 class="font-bold">Sophie Lin</h4>
+                <p class="text-sm text-gray-500">International Relations, Class of 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- News & Events Preview -->
+    <div class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">Latest News & Events</h2>
+          <button class="btn btn-outline" onclick="showSection('news')">View All</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="card overflow-hidden">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <span class="text-sm text-primary font-semibold">Mar 18, 2025</span>
+              <h3 class="text-xl font-bold mb-2">Annual Research Symposium</h3>
+              <p class="text-gray-600 mb-4">Join us for a showcase of innovative research from across disciplines at our annual symposium.</p>
+              <a href="#" class="text-primary font-semibold" onclick="showSection('news')">Read More →</a>
+            </div>
+          </div>
+          
+          <div class="card overflow-hidden">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <span class="text-sm text-primary font-semibold">Mar 15, 2025</span>
+              <h3 class="text-xl font-bold mb-2">New Engineering Building Opens</h3>
+              <p class="text-gray-600 mb-4">State-of-the-art facilities to enhance engineering education and research initiatives.</p>
+              <a href="#" class="text-primary font-semibold" onclick="showSection('news')">Read More →</a>
+            </div>
+          </div>
+          
+          <div class="card overflow-hidden">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <span class="text-sm text-primary font-semibold">Mar 10, 2025</span>
+              <h3 class="text-xl font-bold mb-2">International Conference on Climate Change</h3>
+              <p class="text-gray-600 mb-4">Global experts gather to discuss solutions to the climate crisis.</p>
+              <a href="#" class="text-primary font-semibold" onclick="showSection('news')">Read More →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="py-16 bg-primary">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Ready to Begin Your Journey?</h2>
+        <p class="text-white/80 mb-8 max-w-2xl mx-auto">Join our vibrant community of scholars, innovators, and leaders. Discover how Universitas IIU can help you achieve your academic and professional goals.</p>
+        <button class="btn bg-white text-primary font-bold px-8 py-3" onclick="showSection('contact')">Apply Now</button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ABOUT SECTION -->
+  <section id="about" class="section">
+    <div class="bg-primary py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-white">About Universitas IIU</h1>
+        <p class="text-white/80 mt-4">Learn about our history, mission, and vision for the future.</p>
+      </div>
+    </div>
+    
+    <div class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:space-x-12">
+          <div class="md:w-1/2 mb-8 md:mb-0">
+            <h2 class="text-3xl font-bold mb-6">Our History</h2>
+            <p class="mb-4 text-gray-600">Founded in 1975, Universitas IIU has evolved from a small college to a leading institution of higher education. Over the decades, we have remained committed to our founding principles of academic excellence, innovation, and service to society.</p>
+            <p class="mb-4 text-gray-600">Through periods of growth and transformation, we have expanded our programs, enhanced our facilities, and built a diverse community of scholars dedicated to pushing the boundaries of knowledge and addressing the challenges of our time.</p>
+            <p class="text-gray-600">Today, Universitas IIU stands as a testament to the power of education to transform lives and communities, with alumni making significant contributions across the globe.</p>
+          </div>
+          <div class="md:w-1/2 bg-gray-100 p-8 rounded-lg">
+            <h2 class="text-3xl font-bold mb-6">Our Mission</h2>
+            <p class="mb-6 text-gray-600">Universitas IIU is dedicated to providing a transformative educational experience that prepares students for leadership and service in a diverse and interconnected world.</p>
+            <h3 class="text-xl font-bold mb-2">Our Core Values</h3>
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <div>
+                  <span class="font-bold">Excellence:</span>
+                  <span class="text-gray-600"> Pursuing the highest standards in teaching, research, and service.</span>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <div>
+                  <span class="font-bold">Integrity:</span>
+                  <span class="text-gray-600"> Upholding ethical standards and intellectual honesty in all endeavors.</span>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <div>
+                  <span class="font-bold">Diversity:</span>
+                  <span class="text-gray-600"> Embracing and celebrating the richness of human differences.</span>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <div>
+                  <span class="font-bold">Innovation:</span>
+                  <span class="text-gray-600"> Encouraging creativity and pioneering approaches to education and research.</span>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <div>
+                  <span class="font-bold">Service:</span>
+                  <span class="text-gray-600"> Contributing to the betterment of local and global communities.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Leadership Team</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="w-32 h-32 rounded-full bg-gray-200 mx-auto mb-4"></div>
+            <h3 class="text-xl font-bold">Dr. Sarah Williams</h3>
+            <p class="text-primary font-medium">President</p>
+            <p class="text-gray-600 mt-2">With over 25 years of experience in higher education leadership, Dr. Williams brings vision and strategic direction to Universitas IIU.</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-32 h-32 rounded-full bg-gray-200 mx-auto mb-4"></div>
+            <h3 class="text-xl font-bold">Prof. Daniel Chen</h3>
+            <p class="text-primary font-medium">Provost & Vice President for Academic Affairs</p>
+            <p class="text-gray-600 mt-2">An award-winning scholar, Prof. Chen oversees all academic programs and faculty development initiatives.</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-32 h-32 rounded-full bg-gray-200 mx-auto mb-4"></div>
+            <h3 class="text-xl font-bold">Dr. Maria Gonzalez</h3>
+            <p class="text-primary font-medium">Vice President for Research</p>
+            <p class="text-gray-600 mt-2">Dr. Gonzalez leads the university's research enterprise, promoting innovation and interdisciplinary collaboration.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-6">Our Campus</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto mb-12">Set on 200 acres of beautiful landscape, our campus provides a vibrant and inspiring environment for learning, research, and community engagement.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-gray-200 h-64 rounded-lg"></div>
+          <div class="bg-gray-200 h-64 rounded-lg"></div>
+          <div class="bg-gray-200 h-64 rounded-lg"></div>
+          <div class="bg-gray-200 h-64 rounded-lg"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ACADEMIC PROGRAMS SECTION -->
+  <section id="academics" class="section">
+    <div class="bg-primary py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-white">Academic Programs</h1>
+        <p class="text-white/80 mt-4">Discover our diverse range of undergraduate and graduate offerings</p>
+      </div>
+    </div>
+    
+    <div class="py-8">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-wrap gap-4 mb-8">
+          <button class="px-4 py-2 bg-primary text-white rounded-full program-filter active" data-filter="all">All Programs</button>
+          <button class="px-4 py-2 border border-primary text-primary rounded-full program-filter" data-filter="undergraduate">Undergraduate</button>
+          <button class="px-4 py-2 border border-primary text-primary rounded-full program-filter" data-filter="graduate">Graduate</button>
+          <button class="px-4 py-2 border border-primary text-primary rounded-full program-filter" data-filter="doctoral">Doctoral</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Arts & Humanities -->
+          <div class="card p-6 program-card" data-category="undergraduate graduate">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Arts & Humanities</h3>
+            <p class="text-gray-600 mb-4">Explore human expression across literature, philosophy, history, and the arts.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Bachelor of Arts</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Master of Arts</span>
+            </div>
+            <a href="#" class="text-primary font-semibold" onclick="showSection('academics')">Learn More →</a>
+          </div>
+          
+          <!-- Business -->
+          <div class="card p-6 program-card" data-category="undergraduate graduate doctoral">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Business & Management</h3>
+            <p class="text-gray-600 mb-4">Develop skills in finance, marketing, management, and entrepreneurship.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">BBA</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">MBA</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Ph.D.</span>
+            </div>
+            <a href="#" class="text-primary font-semibold" onclick="showSection('academics')">Learn More →</a>
+          </div>
+          
+          <!-- Science -->
+          <div class="card p-6 program-card" data-category="undergraduate graduate doctoral">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Science & Mathematics</h3>
+            <p class="text-gray-600 mb-4">Study natural sciences, mathematics, and quantitative research methods.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">B.Sc.</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">M.Sc.</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Ph.D.</span>
+            </div>
+            <a href="#" class="text-primary font-semibold" onclick="showSection('academics')">Learn More →</a>
+          </div>
+          
+          <!-- Engineering -->
+          <div class="card p-6 program-card" data-category="undergraduate graduate doctoral">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Engineering & Technology</h3>
+            <p class="text-gray-600 mb-4">Design, build, and optimize systems in various engineering disciplines.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">B.Eng.</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">M.Eng.</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Ph.D.</span>
+            </div>
+            <a href="#" class="text-primary font-semibold" onclick="showSection('academics')">Learn More →</a>
+          </div>
+          
+          <!-- Health Sciences -->
+          <div class="card p-6 program-card" data-category="undergraduate graduate doctoral">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Health Sciences</h3>
+            <p class="text-gray-600 mb-4">Prepare for careers in healthcare, public health, and biomedical research.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">B.S. Health Science</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Master of Public Health</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Ph.D.</span>
+            </div>
+            <a href="#" class="text-primary font-semibold" onclick="showSection('academics')">Learn More →</a>
+          </div>
+          
+          <!-- Social Sciences -->
+          <div class="card p-6 program-card" data-category="undergraduate graduate doctoral">
+            <div class="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Social Sciences</h3>
+            <p class="text-gray-600 mb-4">Examine human behavior, social institutions, and cultural dynamics.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">B.A.</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">M.A.</span>
+              <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Ph.D.</span>
+            </div>
+            <a href="#" class="text-primary font-semibold" onclick="showSection('academics')">Learn More →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl font-bold mb-6">Academic Support & Resources</h2>
+          <p class="text-gray-600 mb-8">Universitas IIU provides comprehensive resources to support student success and enhance the learning experience.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-4">Libraries & Research Centers</h3>
+            <ul class="space-y-2">
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Main Library with over 2 million volumes</span>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Digital repositories and online databases</span>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Specialized research centers and laboratories</span>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Collaborative study spaces</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-4">Academic Support Services</h3>
+            <ul class="space-y-2">
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Academic advising and counseling</span>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Tutoring and writing centers</span>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Disability support services</span>
+              </li>
+              <li class="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>International student support</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- NEWS SECTION -->
+  <section id="news" class="section">
+    <div class="bg-primary py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-white">News & Events</h1>
+        <p class="text-white/80 mt-4">Stay updated with the latest happenings at Universitas IIU</p>
+      </div>
+    </div>
+    
+    <div class="py-8">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-wrap gap-4 mb-8">
+          <button class="px-4 py-2 bg-primary text-white rounded-full news-filter active" data-filter="all">All</button>
+          <button class="px-4 py-2 border border-primary text-primary rounded-full news-filter" data-filter="news">News</button>
+          <button class="px-4 py-2 border border-primary text-primary rounded-full news-filter" data-filter="events">Events</button>
+          <button class="px-4 py-2 border border-primary text-primary rounded-full news-filter" data-filter="announcements">Announcements</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- News Item 1 -->
+          <div class="card overflow-hidden news-item" data-category="events">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-primary font-semibold">Mar 18, 2025</span>
+                <span class="text-xs bg-blue-100 text-blue-800 rounded-full px-2 py-1">Event</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Annual Research Symposium</h3>
+              <p class="text-gray-600 mb-4">Join us for a showcase of innovative research from across disciplines at our annual symposium. Faculty and students will present their latest findings.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Main Campus, 9:00 AM - 5:00 PM</span>
+                <a href="#" class="text-primary font-semibold">Read More →</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- News Item 2 -->
+          <div class="card overflow-hidden news-item" data-category="news">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-primary font-semibold">Mar 15, 2025</span>
+                <span class="text-xs bg-green-100 text-green-800 rounded-full px-2 py-1">News</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">New Engineering Building Opens</h3>
+              <p class="text-gray-600 mb-4">State-of-the-art facilities to enhance engineering education and research initiatives. The building features advanced laboratories and collaborative spaces.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Engineering Campus</span>
+                <a href="#" class="text-primary font-semibold">Read More →</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- News Item 3 -->
+          <div class="card overflow-hidden news-item" data-category="events">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-primary font-semibold">Mar 10, 2025</span>
+                <span class="text-xs bg-blue-100 text-blue-800 rounded-full px-2 py-1">Event</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">International Conference on Climate Change</h3>
+              <p class="text-gray-600 mb-4">Global experts gather to discuss solutions to the climate crisis. Keynote speakers from leading institutions will present cutting-edge research.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Science Center, 8:30 AM - 4:30 PM</span>
+                <a href="#" class="text-primary font-semibold">Read More →</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- News Item 4 -->
+          <div class="card overflow-hidden news-item" data-category="announcements">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-primary font-semibold">Mar 8, 2025</span>
+                <span class="text-xs bg-purple-100 text-purple-800 rounded-full px-2 py-1">Announcement</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Fall 2025 Application Deadline Extended</h3>
+              <p class="text-gray-600 mb-4">Due to high demand, we've extended our application deadline for Fall 2025 admission to April 15. Don't miss this opportunity to join our community.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Admissions Office</span>
+                <a href="#" class="text-primary font-semibold">Read More →</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- News Item 5 -->
+          <div class="card overflow-hidden news-item" data-category="news">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-primary font-semibold">Mar 5, 2025</span>
+                <span class="text-xs bg-green-100 text-green-800 rounded-full px-2 py-1">News</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Professor Wins Prestigious Award</h3>
+              <p class="text-gray-600 mb-4">Dr. Elena Rodriguez from our Physics Department has been awarded the National Medal of Science for her groundbreaking work in quantum mechanics.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Physics Department</span>
+                <a href="#" class="text-primary font-semibold">Read More →</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- News Item 6 -->
+          <div class="card overflow-hidden news-item" data-category="events">
+            <div class="h-48 bg-gray-200"></div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-primary font-semibold">Mar 1, 2025</span>
+                <span class="text-xs bg-blue-100 text-blue-800 rounded-full px-2 py-1">Event</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Spring Arts Festival</h3>
+              <p class="text-gray-600 mb-4">Celebrate creativity with performances, exhibitions, and workshops featuring student and faculty artists from across the university.</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Arts Center, All Day</span>
+                <a href="#" class="text-primary font-semibold">Read More →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-6">Subscribe to Our Newsletter</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto mb-8">Stay informed about the latest news, events, and opportunities at Universitas IIU.</p>
+        <div class="max-w-lg mx-auto">
+          <div class="flex flex-col sm:flex-row gap-4">
+            <input type="email" placeholder="Your email address" class="form-input flex-grow" />
+            <button class="btn btn-primary whitespace-nowrap">Subscribe</button>
+          </div>
+          <p class="text-sm text-gray-500 mt-4">We respect your privacy and will never share your information with third parties.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="section">
+    <div class="bg-primary py-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-white">Contact Us</h1>
+        <p class="text-white/80 mt-4">Get in touch with the Universitas IIU community</p>
+      </div>
+    </div>
+    
+    <div class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:space-x-8">
+          <div class="md:w-1/2 mb-8 md:mb-0">
+            <h2 class="text-3xl font-bold mb-6">Get in Touch</h2>
+            <p class="text-gray-600 mb-8">We'd love to hear from you. Fill out the form and we'll get back to you as soon as possible.</p>
+            
+            <form id="contact-form" class="space-y-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label for="name" class="form-label">Your Name</label>
+                  <input type="text" id="name" name="name" class="form-input" required />
+                </div>
+                <div>
+                  <label for="email" class="form-label">Email Address</label>
+                  <input type="email" id="email" name="email" class="form-input" required />
+                </div>
+              </div>
+              
+              <div>
+                <label for="subject" class="form-label">Subject</label>
+                <input type="text" id="subject" name="subject" class="form-input" required />
+              </div>
+              
+              <div>
+                <label for="message" class="form-label">Message</label>
+                <textarea id="message" name="message" rows="5" class="form-input" required></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+          </div>
+          
+          <div class="md:w-1/2">
+            <h2 class="text-3xl font-bold mb-6">Contact Information</h2>
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-xl font-bold mb-2">Main Campus</h3>
+                <p class="text-gray-600">123 University Avenue<br>Metropolis, MP 12345<br>United States</p>
+              </div>
+              
+              <div>
+                <h3 class="text-xl font-bold mb-2">Phone & Email</h3>
+                <p class="text-gray-600">General Inquiries: (555) 123-4567<br>Admissions: (555) 123-4568<br>Email: info@universitasiiu.edu</p>
+              </div>
+              
+              <div>
+                <h3 class="text-xl font-bold mb-2">Office Hours</h3>
+                <p class="text-gray-600">Monday - Friday: 8:00 AM - 5:00 PM<br>Saturday: 9:00 AM - 1:00 PM<br>Sunday: Closed</p>
+              </div>
+              
+              <div>
+                <h3 class="text-xl font-bold mb-2">Connect With Us</h3>
+                <div class="flex space-x-4">
+                  <a href="#" class="text-primary hover:text-primary-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                    </svg>
+                  </a>
+                  <a href="#" class="text-primary hover:text-primary-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.455-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12c0-5.523-4.477-10-10-10z" />
+                    </svg>
+                  </a>
+                  <a href="#" class="text-primary hover:text-primary-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm-.2 2C5.61 4 4 5.61 4 7.8v8.4c0 2.19 1.61 3.8 3.6 3.8h8.4c1.99 0 3.6-1.61 3.6-3.8V7.8C19.6 5.61 17.99 4 16 4H7.6zm9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z" />
+                    </svg>
+                  </a>
+                  <a href="#" class="text-primary hover:text-primary-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153ZM17.61 20.644h2.039L6.486 3.24H4.298L17.61 20.644Z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+        <div class="max-w-3xl mx-auto">
+          <div class="space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow">
+              <h3 class="text-xl font-bold mb-2">How do I apply for admission?</h3>
+              <p class="text-gray-600">Applications can be submitted online through our admissions portal. Visit the Admissions section of our website for detailed instructions and requirements for your program of interest.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+              <h3 class="text-xl font-bold mb-2">What financial aid options are available?</h3>
+              <p class="text-gray-600">We offer a variety of scholarships, grants, and loans based on academic merit and financial need. Contact our Financial Aid Office for personalized assistance with your financial aid application.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+              <h3 class="text-xl font-bold mb-2">Can I schedule a campus tour?</h3>
+              <p class="text-gray-600">Yes, we offer in-person and virtual campus tours throughout the year. Visit our website or contact the Admissions Office to schedule your tour and experience Universitas IIU firsthand.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+              <h3 class="text-xl font-bold mb-2">What housing options are available for students?</h3>
+              <p class="text-gray-600">We provide on-campus residence halls for undergraduate and graduate students, as well as family housing options. Information about housing facilities, costs, and application procedures can be found on our Residential Life webpage.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Universitas IIU</h3>
+          <p class="text-gray-400 mb-4">Empowering minds, inspiring futures.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.455-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12c0-5.523-4.477-10-10-10z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm-.2 2C5.61 4 4 5.61 4 7.8v8.4c0 2.19 1.61 3.8 3.6 3.8h8.4c1.99 0 3.6-1.61 3.6-3.8V7.8C19.6 5.61 17.99 4 16 4H7.6zm9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153ZM17.61 20.644h2.039L6.486 3.24H4.298L17.61 20.644Z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" onclick="showSection('home')" class="text-gray-400 hover:text-white">Home</a></li>
+            <li><a href="#" onclick="showSection('about')" class="text-gray-400 hover:text-white">About Us</a></li>
+            <li><a href="#" onclick="showSection('academics')" class="text-gray-400 hover:text-white">Academic Programs</a></li>
+            <li><a href="#" onclick="showSection('news')" class="text-gray-400 hover:text-white">News & Events</a></li>
+            <li><a href="#" onclick="showSection('contact')" class="text-gray-400 hover:text-white">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Resources</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Library</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Research</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Student Services</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Campus Map</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Career Services</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Contact</h3>
+          <address class="text-gray-400 not-italic">
+            123 University Avenue<br>
+            Metropolis, MP 12345<br>
+            United States<br><br>
+            <a href="tel:+15551234567" class="hover:text-white">(555) 123-4567</a><br>
+            <a href="mailto:info@universitasiiu.edu" class="hover:text-white">info@universitasiiu.edu</a>
+          </address>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-12 pt-8 text-sm text-gray-400 text-center">
+        <p>&copy; 2025 Universitas IIU. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Show section function
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Show the selected section
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Update active nav link
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Update active nav link in both desktop and mobile menus
+      document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.textContent.toLowerCase().includes(sectionId) ||
+            (sectionId === 'home' && link.textContent === 'Home')) {
+          link.classList.add('active');
+        }
+      });
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+    
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('active');
+    }
+    
+    // Program filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Program filters
+      const programFilters = document.querySelectorAll('.program-filter');
+      programFilters.forEach(filter => {
+        filter.addEventListener('click', function() {
+          // Update active filter
+          programFilters.forEach(f => f.classList.remove('active', 'bg-primary', 'text-white'));
+          programFilters.forEach(f => f.classList.add('border', 'border-primary', 'text-primary'));
+          this.classList.add('active', 'bg-primary', 'text-white');
+          this.classList.remove('border', 'border-primary', 'text-primary');
+          
+          const filterValue = this.getAttribute('data-filter');
+          
+          // Filter program cards
+          const programCards = document.querySelectorAll('.program-card');
+          programCards.forEach(card => {
+            if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+      
+      // News filters
+      const newsFilters = document.querySelectorAll('.news-filter');
+      newsFilters.forEach(filter => {
+        filter.addEventListener('click', function() {
+          // Update active filter
+          newsFilters.forEach(f => f.classList.remove('active', 'bg-primary', 'text-white'));
+          newsFilters.forEach(f => f.classList.add('border', 'border-primary', 'text-primary'));
+          this.classList.add('active', 'bg-primary', 'text-white');
+          this.classList.remove('border', 'border-primary', 'text-primary');
+          
+          const filterValue = this.getAttribute('data-filter');
+          
+          // Filter news items
+          const newsItems = document.querySelectorAll('.news-item');
+          newsItems.forEach(item => {
+            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+      
+      // Contact form submission
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('Thank you for your message. We will get back to you soon!');
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
